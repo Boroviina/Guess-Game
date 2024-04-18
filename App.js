@@ -15,6 +15,7 @@ SplashScreen.preventAutoHideAsync();    //// Keep the splash screen visible whil
 export default function App() {
     const [userNumber, setUserNumber] = useState();
     const [gameOver, setGameOver] = useState(false);  //the game is not started yet
+    const [guessRounds, setGuessRounds]=useState(0);
 
     const [fontsLoaded] = useFonts({
         'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
@@ -40,6 +41,10 @@ export default function App() {
     function GameOverHandler() {
         setGameOver(true);
     }
+    function startNewGameHandler(){
+        setUserNumber(null);
+        setGuessRounds(0);
+    }
 
     //formiram varijablu screen koja ce podefaultu biti StartGAmeScreen
     //ukoliko je poznat broj onda ce biti aktivan GameScreen
@@ -49,7 +54,7 @@ export default function App() {
         screen = <GameScreen userNumber={userNumber} onGameOver={GameOverHandler}/>;
     }
     if (gameOver && userNumber) {
-        screen = <GameOverScreen/>
+        screen = <GameOverScreen userNumber={userNumber} roundsNumber={guessRounds} onStartNewGame={startNewGameHandler}/>
     }
 
     return (
