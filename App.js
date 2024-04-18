@@ -27,7 +27,7 @@ export default function App() {
     //ovo omogucava dinamicko prikazivanje ekrana u zavisnosti od stanja
     let screen = <StartGameScreen onPickNumber={pickedNumberHandler}/>;
     if (userNumber) {
-        screen = <GameScreen/>;
+        screen = <GameScreen userNumber={userNumber}/>;
     }
     return (
         <LinearGradient colors={[Colors.primary900, Colors.secondary300]} style={styles.rootScreen}>
