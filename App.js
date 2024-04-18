@@ -6,11 +6,23 @@ import {LinearGradient} from "expo-linear-gradient";
 import GameScreen from "./screens/GameScreen";
 import Colors from "./constans/colors";
 import GameOverScreen from "./screens/GameOverScreen";
+import {useFonts} from "expo-font";
+import AppLoading from "expo-app-loading";
+import * as SplashScreen from 'expo-splash-screen';
 
+SplashScreen.preventAutoHideAsync();    //// Keep the splash screen visible while we fetch resources
 
 export default function App() {
     const [userNumber, setUserNumber] = useState();
     const [gameOver, setGameOver] = useState(false);  //the game is not started yet
+
+    const [fontsLoaded] = useFonts({
+        'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
+        'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf')
+    })
+    if (!fontsLoaded){
+        return <AppLoading/>;
+    }
 
 
     //on kupi broj iy TextInput-a i postavlja ga u promjenljivu userNumber
@@ -24,7 +36,8 @@ export default function App() {
     function pickedNumberHandler(pickedNumber) {
         setUserNumber(pickedNumber);
     }
-    function GameOverHandler(){
+
+    function GameOverHandler() {
         setGameOver(true);
     }
 
