@@ -5,10 +5,13 @@ import StartGameScreen from "./screens/StartGameScreen";
 import {LinearGradient} from "expo-linear-gradient";
 import GameScreen from "./screens/GameScreen";
 import Colors from "./constans/colors";
+import GameOverScreen from "./screens/GameOverScreen";
 
 
 export default function App() {
     const [userNumber, setUserNumber] = useState();
+    const [gameOver, setGameOver] = useState(false);  //the game is not started yet
+
 
     //on kupi broj iy TextInput-a i postavlja ga u promjenljivu userNumber
     //pickedNumber ce biti pokupljeno jer je na TextInput-u postavljen onChangeText VEOMA BITNO!!!!
@@ -21,14 +24,21 @@ export default function App() {
     function pickedNumberHandler(pickedNumber) {
         setUserNumber(pickedNumber);
     }
+    function GameOverHandler(){
+        setGameOver(true);
+    }
 
     //formiram varijablu screen koja ce podefaultu biti StartGAmeScreen
     //ukoliko je poznat broj onda ce biti aktivan GameScreen
     //ovo omogucava dinamicko prikazivanje ekrana u zavisnosti od stanja
     let screen = <StartGameScreen onPickNumber={pickedNumberHandler}/>;
     if (userNumber) {
-        screen = <GameScreen userNumber={userNumber}/>;
+        screen = <GameScreen userNumber={userNumber} onGameOver={GameOverHandler}/>;
     }
+    if (gameOver && userNumber) {
+        screen = <GameOverScreen/>
+    }
+
     return (
         <LinearGradient colors={[Colors.primary900, Colors.secondary300]} style={styles.rootScreen}>
             <ImageBackground source={require('./assets/images/background.png')}
