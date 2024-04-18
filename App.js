@@ -14,7 +14,7 @@ SplashScreen.preventAutoHideAsync();    //// Keep the splash screen visible whil
 
 export default function App() {
     const [userNumber, setUserNumber] = useState();
-    const [gameOver, setGameOver] = useState(false);  //the game is not started yet
+    const [gameOver, setGameOver] = useState(true);  //the game is not started yet
     const [guessRounds, setGuessRounds]=useState(0);
 
     const [fontsLoaded] = useFonts({
@@ -36,10 +36,12 @@ export default function App() {
     //izvrsenje fje onPickedNumber cemo pozvati kada pritisnemo submit dugme i ako je broj u redu bice proslijedjen fji
     function pickedNumberHandler(pickedNumber) {
         setUserNumber(pickedNumber);
+        setGameOver(false)
     }
 
-    function GameOverHandler() {
+    function GameOverHandler(numberOfRounds) {
         setGameOver(true);
+        setGuessRounds(numberOfRounds);
     }
     function startNewGameHandler(){
         setUserNumber(null);
