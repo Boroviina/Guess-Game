@@ -1,4 +1,4 @@
-import {Text, View, StyleSheet} from "react-native";
+import {Text, View, StyleSheet, Dimensions} from "react-native";
 import Colors from "../../constans/colors";
 
 function NumberContainer({children}) {
@@ -11,11 +11,13 @@ function NumberContainer({children}) {
 
 export default NumberContainer;
 
+const deviceWidth = Dimensions.get('window').width;
+
 const styles = StyleSheet.create({
     container: {
         borderWidth: 4,
         borderColor: Colors.secondary300,
-        padding: 24,
+        padding: deviceWidth < 380 ? 18 : 36,
         borderRadius: 8,
         margin: 24,
         alignItems: "center",

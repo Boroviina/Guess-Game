@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {TextInput, View, StyleSheet, Alert} from "react-native";
+import {TextInput, View, StyleSheet, Alert, useWindowDimensions} from "react-native";
 import PrimaryButton from "../components/PrimaryButton";
 import Colors from "../constans/colors";
 import Title from "../components/title";
@@ -8,6 +8,8 @@ import InstructionTextComponent from "../components/InstructionTextComponent";
 
 function StartGameScreen({onPickNumber}) {
     const [enteredNumber, setEnteredNumber] = useState('');
+    const {width, height} = useWindowDimensions();    //this hook watch dimensions and whenever it changes becouse the device is rotated
+    //this component will rerender and we will have new dimensions of width and height
 
     function numberInputHandler(enteredText) {
         setEnteredNumber(enteredText);
@@ -30,8 +32,10 @@ function StartGameScreen({onPickNumber}) {
         onPickNumber(chosenNumber);
     }
 
+    const marginTopDistance = height < 380 ? 30 : 200;
+
     return (
-        <View style={styles.rootContainer}>
+        <View style={[styles.rootContainer, {marginTop: marginTopDistance}]}>
             <Title>Guess My Number</Title>
             <Card>
                 <InstructionTextComponent children={"Enter a Number"}/>
@@ -59,10 +63,12 @@ function StartGameScreen({onPickNumber}) {
 
 export default StartGameScreen;
 
+// const deviceHeight = Dimensions.get('window').height;
+
 const styles = StyleSheet.create({
     rootContainer: {
         flex: 1,
-        marginTop: 100,
+        // marginTop: deviceHeight < 380 ? 30 : 100
         alignItems: "center", //"stretch"is default
     },
 
